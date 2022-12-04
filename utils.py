@@ -16,20 +16,22 @@ def plot_images(images):
 
 def save_images(images, path, **kwargs):
     grid = torchvision.utils.make_grid(images, **kwargs)
-    ndarr = grid.permute(1, 2, 0).to('cpu').numpy()
+    ndarr = grid.to('cpu').numpy()
     im = Image.fromarray(ndarr)
     im.save(path)
 
 
 def get_data(args):
-    transforms = torchvision.transforms.Compose([
-        torchvision.transforms.Resize(80),  # args.image_size + 1/4 *args.image_size
-        torchvision.transforms.RandomResizedCrop(args.image_size, scale=(0.8, 1.0)),
-        torchvision.transforms.ToTensor(),
-        torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])
-    dataset = torchvision.datasets.ImageFolder(args.dataset_path, transform=transforms)
-    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
+    transforms = torchvision.transforms.Compose(
+        [
+            torchvision.transforms.Resize(64),
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize(0.1307, 0.3081),
+        ]
+    )
+    batch_size = 1
+    dataset = torchvision.datasets.MNIST("./mnist/", train=True, transform=transforms, download=True)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, num_workers=2, shuffle=True)
     return dataloader
 
 
