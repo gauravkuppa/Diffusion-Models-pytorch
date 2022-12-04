@@ -29,7 +29,7 @@ def get_data(args):
             torchvision.transforms.Normalize(0.1307, 0.3081),
         ]
     )
-    batch_size = 1
+    batch_size = args.batch_size 
     dataset = torchvision.datasets.MNIST("./mnist/", train=True, transform=transforms, download=True)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, num_workers=2, shuffle=True)
     return dataloader
