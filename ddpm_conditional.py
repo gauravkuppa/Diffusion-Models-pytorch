@@ -117,7 +117,7 @@ def launch():
     args = parser.parse_args()
     args.run_name = "DDPM_conditional"
     args.epochs = 300
-    args.batch_size = 1
+    args.batch_size = 16
     args.image_size = 64
     args.num_classes = 10
     args.dataset_path = r"C:\Users\dome\datasets\cifar10\cifar10-64\train"
