@@ -80,8 +80,6 @@ def train(args):
         logging.info(f"Starting epoch {epoch}:")
         pbar = tqdm(dataloader)
         for i, (images, labels) in enumerate(pbar):
-            if i > 10:
-                break
             images = images.to(device)
             labels = labels.to(device)
             t = diffusion.sample_timesteps(images.shape[0]).to(device)
@@ -117,7 +115,7 @@ def launch():
     args = parser.parse_args()
     args.run_name = "DDPM_conditional"
     args.epochs = 300
-    args.batch_size = 16
+    args.batch_size = 8
     args.image_size = 64
     args.num_classes = 10
     args.dataset_path = r"C:\Users\dome\datasets\cifar10\cifar10-64\train"
